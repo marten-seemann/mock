@@ -347,13 +347,9 @@ func Test_createPackageMap(t *testing.T) {
 		//{"modules", "rsc.io/quote/v3", "quote", true},
 		{"fail", "this/should/not/work", "", false},
 	}
-	var importPaths []string
-	for _, t := range tests {
-		importPaths = append(importPaths, t.importPath)
-	}
-	packages := createPackageMap(importPaths)
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			packages := createPackageMap([]string{tt.importPath})
 			gotPackageName, gotOk := packages[tt.importPath]
 			if gotPackageName != tt.wantPackageName {
 				t.Errorf("createPackageMap() gotPackageName = %v, wantPackageName = %v", gotPackageName, tt.wantPackageName)
